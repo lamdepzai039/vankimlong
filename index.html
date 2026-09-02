@@ -39,6 +39,18 @@
 
     a { text-decoration: none; }
 
+    @keyframes fadeUp{
+      from{ opacity:0; transform: translateY(12px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       SPLASH — two-stage intro to mirror the reference video:
+       Stage 1: a tilted "road tile" spins/settles with a top-down
+                 truck icon locking into place (perspective feel)
+       Stage 2: crossfades into a diagonal road, truck drives along
+                 it, then the wordmark + tagline reveal underneath
+       ============================================================ */
     #splash {
       position: fixed;
       inset: 0;
@@ -46,9 +58,10 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      background: radial-gradient(circle at 50% 25%, rgba(247, 187, 37, 0.18), transparent 20%),
+      background: radial-gradient(circle at 50% 25%, rgba(247, 187, 37, 0.18), transparent 55%),
                   linear-gradient(180deg, #131b23 0%, #0c151c 100%);
       z-index: 999;
+      overflow: hidden;
       transition: opacity 0.7s ease, visibility 0.7s ease;
     }
 
@@ -58,62 +71,116 @@
       pointer-events: none;
     }
 
-    .road {
+    .splash-stage{
       position: relative;
-      width: min(460px, 78vw);
-      height: 4px;
-      background: rgba(255,255,255,0.12);
-      margin-bottom: 36px;
-      border-radius: 999px;
-      overflow: visible;
+      width: 220px;
+      height: 220px;
+      margin-bottom: 8px;
     }
 
-    .road::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        rgba(247, 187, 37, 0.9) 0 24px,
-        transparent 24px 42px
-      );
-      border-radius: inherit;
+    /* ---- Stage 1: rotating road tile + top-down truck ---- */
+    .tile-wrap{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      -webkit-mask-image: radial-gradient(circle at center, black 52%, transparent 76%);
+      mask-image: radial-gradient(circle at center, black 52%, transparent 76%);
+      animation: tileWrapOut 3s ease forwards;
+    }
+    @keyframes tileWrapOut{
+      0%, 44% { opacity: 1; }
+      60%, 100% { opacity: 0; }
     }
 
-    .truck-wrap {
-      position: absolute;
-      left: -56px;
-      top: -20px;
-      animation: road-travel 2.7s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
-      filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.26));
+    .road-tile{
+      position:absolute;
+      width: 156px; height: 156px;
+      border: 1.5px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      opacity: 0;
+      transform: rotate(60deg) scale(.42);
+      animation: tileSpin 1.5s cubic-bezier(.22,.85,.3,1) forwards;
+    }
+    .road-tile::before, .road-tile::after{
+      content:'';
+      position:absolute;
+      background: rgba(255,255,255,.13);
+    }
+    .road-tile::before{ left:50%; top:6px; bottom:6px; width:1.5px; transform:translateX(-50%); }
+    .road-tile::after{ top:50%; left:6px; right:6px; height:1.5px; transform:translateY(-50%); }
+    @keyframes tileSpin{
+      0%   { opacity: 0; transform: rotate(60deg) scale(.42); }
+      38%  { opacity: 1; transform: rotate(45deg) scale(.94); }
+      65%  { opacity: 1; transform: rotate(45deg) scale(1); }
+      100% { opacity: 1; transform: rotate(41deg) scale(1.03); }
     }
 
-    @keyframes road-travel {
-      0% {
-        transform: translateX(0) scale(1);
-        opacity: 1;
-      }
-      58% {
-        transform: translateX(calc(min(460px, 78vw) - 6px)) scale(1.03);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(calc(min(460px, 78vw) - 6px)) scale(1.08);
-        opacity: 0;
-      }
+    .vehicle-top{
+      position:absolute;
+      width: 34px; height: 34px;
+      opacity: 0;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
+      animation: vtIn 1.5s cubic-bezier(.22,.85,.3,1) forwards;
+    }
+    .vehicle-top svg{ width:100%; height:100%; display:block; }
+    @keyframes vtIn{
+      0%   { opacity: 0; transform: rotate(-44deg) scale(.4); }
+      38%  { opacity: 1; transform: rotate(-6deg) scale(1.1); }
+      65%  { opacity: 1; transform: rotate(0deg) scale(1); }
+      100% { opacity: 1; transform: rotate(0deg) scale(1); }
     }
 
-    .truck-wrap svg {
-      width: 82px;
-      height: auto;
-      display: block;
+    /* ---- Stage 2: diagonal road + side-view truck driving ---- */
+    .diag-wrap{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      opacity: 0;
+      animation: diagIn 3s ease forwards;
+    }
+    @keyframes diagIn{
+      0%, 58%  { opacity: 0; }
+      74%, 100% { opacity: 1; }
+    }
+
+    .diag-line{
+      position:relative;
+      width: 214px; height: 3px;
+      background: rgba(255,255,255,.12);
+      border-radius: 2px;
+      transform: rotate(-32deg);
+    }
+    .diag-line::before{
+      content:'';
+      position:absolute;
+      inset: -1.5px 0;
+      border-radius: 2px;
+      background-image: repeating-linear-gradient(90deg, var(--gold) 0 16px, transparent 16px 30px);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 22%);
+      mask-image: linear-gradient(90deg, transparent 0%, black 22%);
+      opacity: .95;
+    }
+
+    .diag-truck{
+      position:absolute;
+      left:0; top:50%;
+      opacity: 0;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.4));
+      animation: diagDrive 1.35s cubic-bezier(.3,.7,.2,1) forwards;
+      animation-delay: 1.7s;
+    }
+    .diag-truck svg{ width: 58px; height: auto; display:block; }
+    @keyframes diagDrive{
+      0%   { opacity: 0; transform: translate(-10px,-50%) rotate(-32deg) scale(.72); }
+      16%  { opacity: 1; }
+      100% { opacity: 1; transform: translate(180px,-50%) rotate(-32deg) scale(1); }
     }
 
     .splash-brand {
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: #f4efe8;
+      opacity: 0;
+      animation: fadeUp .7s ease 2.15s forwards;
     }
 
     .splash-brand .accent {
@@ -126,12 +193,16 @@
       color: rgba(255,255,255,0.65);
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp .7s ease 2.3s forwards;
     }
 
     .loader {
       display: flex;
       gap: 9px;
-      margin-top: 28px;
+      margin-top: 26px;
+      opacity: 0;
+      animation: fadeUp .7s ease 2.45s forwards;
     }
 
     .loader span {
@@ -157,6 +228,9 @@
       }
     }
 
+    /* ============================================================
+       MAIN PAGE
+       ============================================================ */
     .page {
       min-height: 100vh;
       display: grid;
@@ -764,19 +838,43 @@
 </head>
 <body>
   <div id="splash">
-    <div class="road">
-      <div class="truck-wrap">
-        <svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="18" width="52" height="18" rx="2" fill="#F7F3EE"/>
-          <path d="M54 22H74C77.314 22 80 24.686 80 28V32C80 35.314 77.314 38 74 38H54V22Z" fill="#F05B1A"/>
-          <path d="M80 27H89C92.314 27 95 29.686 95 33V34C95 37.314 92.314 40 89 40H80V27Z" fill="#F7BB25"/>
-          <circle cx="22" cy="40" r="7" fill="#101820"/>
-          <circle cx="22" cy="40" r="2.6" fill="#6B7280"/>
-          <circle cx="78" cy="40" r="7" fill="#101820"/>
-          <circle cx="78" cy="40" r="2.6" fill="#6B7280"/>
-        </svg>
+    <div class="splash-stage">
+
+      <!-- Stage 1: road tile spinning into place, top-down truck -->
+      <div class="tile-wrap">
+        <div class="road-tile"></div>
+        <div class="vehicle-top">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="4" width="20" height="32" rx="4" fill="#F7F3EE"/>
+            <rect x="13" y="8" width="14" height="10" rx="2" fill="#F05B1A"/>
+            <rect x="13" y="21" width="14" height="9" rx="1.6" fill="#D8D2C6"/>
+            <circle cx="13.5" cy="8" r="2.6" fill="#101820"/>
+            <circle cx="26.5" cy="8" r="2.6" fill="#101820"/>
+            <circle cx="13.5" cy="32" r="2.6" fill="#101820"/>
+            <circle cx="26.5" cy="32" r="2.6" fill="#101820"/>
+          </svg>
+        </div>
       </div>
+
+      <!-- Stage 2: diagonal road, side-view truck drives across -->
+      <div class="diag-wrap">
+        <div class="diag-line"></div>
+        <div class="diag-truck">
+          <svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="44" rx="42" ry="3" fill="black" opacity=".25"/>
+            <rect x="2" y="18" width="52" height="18" rx="2" fill="#F7F3EE"/>
+            <path d="M54 22H74C77.314 22 80 24.686 80 28V32C80 35.314 77.314 38 74 38H54V22Z" fill="#F05B1A"/>
+            <path d="M80 27H89C92.314 27 95 29.686 95 33V34C95 37.314 92.314 40 89 40H80V27Z" fill="#F7BB25"/>
+            <circle cx="22" cy="40" r="7" fill="#101820"/>
+            <circle cx="22" cy="40" r="2.6" fill="#6B7280"/>
+            <circle cx="78" cy="40" r="7" fill="#101820"/>
+            <circle cx="78" cy="40" r="2.6" fill="#6B7280"/>
+          </svg>
+        </div>
+      </div>
+
     </div>
+
     <div class="splash-brand">Vạn Kim <span class="accent">Long</span></div>
     <div class="splash-tag">Logistics &nbsp;·&nbsp; vận chuyển chuyên nghiệp</div>
     <div class="loader" aria-hidden="true">
@@ -907,12 +1005,33 @@
     </aside>
   </div>
 
+  <button id="replaySplash" style="position:fixed;bottom:16px;right:16px;background:#0c1319;color:#f4efe8;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:9px 16px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;opacity:.7;z-index:1000;">↻ Xem lại splash</button>
+
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
+    function playSplash(){
+      const splash = document.getElementById('splash');
+      // restart CSS animations by cloning the stage node
+      const stage = splash.querySelector('.splash-stage');
+      const clone = stage.cloneNode(true);
+      stage.parentNode.replaceChild(clone, stage);
+      const brand = splash.querySelector('.splash-brand');
+      const tag = splash.querySelector('.splash-tag');
+      const loader = splash.querySelector('.loader');
+      [brand, tag, loader].forEach(el=>{
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = '';
+      });
+      splash.classList.remove('hide');
+      setTimeout(()=> splash.classList.add('hide'), 3100);
+    }
+    document.getElementById('replaySplash').addEventListener('click', playSplash);
+
     window.addEventListener('load', function () {
       setTimeout(function () {
         document.getElementById('splash').classList.add('hide');
-      }, 2300);
+      }, 3100);
     });
 
     const pwd = document.getElementById('password');
