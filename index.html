@@ -68,63 +68,78 @@
   .splash-ground{
     position:absolute; left: 8%; right: 8%; bottom: 46px; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(15,23,32,.10) 15%, rgba(15,23,32,.10) 85%, transparent);
-    opacity: 0; animation: fadeUp .6s ease .9s forwards;
+    opacity: 0; animation: fadeUp .7s ease .5s forwards;
   }
   .truck-shadow{
     position:absolute; bottom: 40px; width: 130px; height: 16px; border-radius: 50%;
     background: radial-gradient(closest-side, rgba(15,23,32,.22), rgba(15,23,32,0) 75%);
-    opacity: 0; animation: truckShadowMove 5s cubic-bezier(.22,.9,.24,1) forwards;
+    opacity: 0; animation: truckShadowMove 5.2s cubic-bezier(.16,.7,.2,1) forwards;
   }
   @keyframes truckShadowMove{
-    0%{opacity:0; transform: translateX(-190px) scale(.55);}
-    18.2%{opacity:0; transform: translateX(-190px) scale(.55);}
-    27%{opacity:.5; transform: translateX(-120px) scale(.7);}
-    54.5%{opacity:.8; transform: translateX(-14px) scale(.95);}
-    63.6%{opacity:.9; transform: translateX(0) scale(1);}
-    67%{opacity:.55; transform: translateX(0) scale(.88);}
-    72.7%{opacity:.9; transform: translateX(0) scale(1);}
-    100%{opacity:.9; transform: translateX(0) scale(1);}
+    0%    {opacity:0;   transform: translateX(-220px) scale(.5);}
+    15%   {opacity:0;   transform: translateX(-220px) scale(.5);}
+    24%   {opacity:.35; transform: translateX(-185px) scale(.58);}
+    36%   {opacity:.55; transform: translateX(-138px) scale(.68);}
+    48%   {opacity:.68; transform: translateX(-92px)  scale(.78);}
+    58%   {opacity:.78; transform: translateX(-54px)  scale(.87);}
+    66%   {opacity:.85; transform: translateX(-24px)  scale(.94);}
+    72%   {opacity:.9;  transform: translateX(-6px)   scale(.98);}
+    76%   {opacity:.92; transform: translateX(0)      scale(1);}
+    79%   {opacity:.7;  transform: translateX(0)      scale(.9);}
+    83%   {opacity:.9;  transform: translateX(0)      scale(1);}
+    86%   {opacity:.82; transform: translateX(0)      scale(.96);}
+    90%   {opacity:.9;  transform: translateX(0)      scale(1);}
+    100%  {opacity:.9;  transform: translateX(0)      scale(1);}
   }
-  .speed-lines{ position:absolute; bottom: 76px; display:flex; flex-direction:column; gap: 7px; opacity: 0; animation: speedLinesMove 5s ease forwards; }
+  .speed-lines{ position:absolute; bottom: 76px; display:flex; flex-direction:column; gap: 7px; opacity: 0; animation: speedLinesMove 5.2s ease forwards; }
   .speed-lines i{ display:block; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, rgba(240,91,26,.35)); }
   .speed-lines i:nth-child(1){ width: 30px; }
   .speed-lines i:nth-child(2){ width: 44px; }
   .speed-lines i:nth-child(3){ width: 22px; }
   @keyframes speedLinesMove{
-    0%{opacity:0; transform: translateX(-210px);}
-    18.2%{opacity:0; transform: translateX(-210px);}
-    27%{opacity:.9; transform: translateX(-140px);}
-    54.5%{opacity:.9; transform: translateX(-28px);}
-    63.6%{opacity:0; transform: translateX(-6px);}
-    100%{opacity:0; transform: translateX(-6px);}
+    0%   {opacity:0;  transform: translateX(-230px);}
+    15%  {opacity:0;  transform: translateX(-230px);}
+    26%  {opacity:.85;transform: translateX(-172px);}
+    42%  {opacity:.9; transform: translateX(-108px);}
+    58%  {opacity:.9; transform: translateX(-56px);}
+    70%  {opacity:.5; transform: translateX(-18px);}
+    76%  {opacity:0;  transform: translateX(-4px);}
+    100% {opacity:0;  transform: translateX(-4px);}
   }
   .truck-wrap{
     position:absolute; bottom: 46px; width: 190px; opacity: 0;
     filter: drop-shadow(0 14px 18px rgba(20,20,15,.16));
-    animation: truckArrive 5s cubic-bezier(.22,.9,.24,1) forwards;
+    animation: truckArrive 5.2s cubic-bezier(.16,.7,.2,1) forwards;
   }
   .truck-wrap svg{ width:100%; height:auto; display:block; }
   @keyframes truckArrive{
-    0%{opacity:0; transform: translate(-210px,0) scale(.82);}
-    18.2%{opacity:0; transform: translate(-210px,0) scale(.82);}
-    27%{opacity:1; transform: translate(-150px,0) scale(.88);}
-    45%{opacity:1; transform: translate(-78px,0) scale(.95);}
-    54.5%{opacity:1; transform: translate(-22px,0) scale(.99);}
-    61%{opacity:1; transform: translate(-2px,0) scale(1);}
-    65.5%{opacity:1; transform: translate(0,-7px) scale(1);}
-    69%{opacity:1; transform: translate(0,2px) scale(1);}
-    72.7%{opacity:1; transform: translate(0,0) scale(1);}
-    100%{opacity:1; transform: translate(0,0) scale(1);}
+    0%    {opacity:0;   transform: translate(-230px,0) scale(.8);}
+    15%   {opacity:0;   transform: translate(-230px,0) scale(.8);}
+    22%   {opacity:1;   transform: translate(-207px,0) scale(.82);}
+    30%   {opacity:1;   transform: translate(-172px,0) scale(.855);}
+    38%   {opacity:1;   transform: translate(-134px,0) scale(.89);}
+    46%   {opacity:1;   transform: translate(-98px,0)  scale(.925);}
+    54%   {opacity:1;   transform: translate(-66px,0)  scale(.955);}
+    61%   {opacity:1;   transform: translate(-40px,0)  scale(.978);}
+    67%   {opacity:1;   transform: translate(-20px,0)  scale(.992);}
+    72%   {opacity:1;   transform: translate(-7px,0)   scale(.999);}
+    76%   {opacity:1;   transform: translate(0,0)       scale(1);}
+    /* two-stage settle bounce, smaller each time */
+    79.5% {opacity:1;   transform: translate(0,-6.5px)  scale(1);}
+    83%   {opacity:1;   transform: translate(0,1.5px)   scale(1);}
+    86.5% {opacity:1;   transform: translate(0,-1.5px)  scale(1);}
+    90%   {opacity:1;   transform: translate(0,0)        scale(1);}
+    100%  {opacity:1;   transform: translate(0,0)        scale(1);}
   }
   .truck-wrap .wheel-f, .truck-wrap .wheel-r{
     transform-origin: center; transform-box: fill-box;
-    animation: wheelSpin 2.3s cubic-bezier(.22,.9,.24,1) forwards;
+    animation: wheelSpin 3.95s cubic-bezier(.16,.7,.2,1) forwards;
   }
-  @keyframes wheelSpin{ 0%{transform:rotate(0);} 100%{transform:rotate(620deg);} }
-  .splash-brand{ margin-top: 22px; font-size: clamp(2rem,4vw,2.7rem); font-weight:800; letter-spacing:.04em; color: var(--ink); opacity:0; animation: fadeUp .6s ease 3.7s forwards; }
+  @keyframes wheelSpin{ 0%{transform:rotate(0);} 100%{transform:rotate(900deg);} }
+  .splash-brand{ margin-top: 22px; font-size: clamp(2rem,4vw,2.7rem); font-weight:800; letter-spacing:.04em; color: var(--ink); opacity:0; animation: fadeUp .65s cubic-bezier(.2,.8,.3,1) 4.05s forwards; }
   .splash-brand .accent{ color: var(--orange); }
-  .splash-tag{ margin-top:8px; font-size:.86rem; color: var(--muted); letter-spacing:.1em; text-transform:uppercase; opacity:0; animation: fadeUp .6s ease 3.85s forwards; }
-  .loader{ display:flex; gap:8px; margin-top:22px; opacity:0; animation: fadeUp .5s ease 4.3s forwards; }
+  .splash-tag{ margin-top:8px; font-size:.86rem; color: var(--muted); letter-spacing:.1em; text-transform:uppercase; opacity:0; animation: fadeUp .6s cubic-bezier(.2,.8,.3,1) 4.2s forwards; }
+  .loader{ display:flex; gap:8px; margin-top:22px; opacity:0; animation: fadeUp .5s ease 4.6s forwards; }
   .loader span{ width:6px; height:6px; border-radius:50%; background: rgba(15,23,32,.18); animation: pulse 1s ease-in-out infinite; }
   .loader span:nth-child(2){ animation-delay:.15s; }
   .loader span:nth-child(3){ animation-delay:.3s; }
@@ -273,6 +288,53 @@
      ABOUT
      ============================================================ */
   .about{ background: var(--panel-strong); }
+  .about-banner{
+    position:relative; border-radius:26px; overflow:hidden; margin-bottom:56px;
+    height: 320px; box-shadow: var(--shadow);
+  }
+  .about-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .about-banner::after{
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(0deg, rgba(10,14,18,.75) 0%, rgba(10,14,18,.15) 55%, rgba(10,14,18,0) 100%);
+  }
+  .about-banner-content{
+    position:absolute; left:0; right:0; bottom:0; z-index:2;
+    padding: 28px 34px; display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    color:#f4efe8;
+  }
+  .about-banner-content h3{ font-size: clamp(1.5rem,2.6vw,2.1rem); max-width:520px; line-height:1.15; }
+  .about-banner-badge{
+    display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:999px;
+    background: rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); backdrop-filter: blur(6px);
+    font-size:.82rem; font-weight:700; white-space:nowrap;
+  }
+  .about-banner-badge b{ font-family:'Barlow Condensed',sans-serif; font-size:1.3rem; color: var(--gold); margin-right:4px; }
+  @media (max-width:768px){ .about-banner{ height:260px; } .about-banner-content{ padding:20px; } }
+
+  .about-gallery{ margin-top:56px; display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap:18px; }
+  @media (max-width:860px){ .about-gallery{ grid-template-columns:1fr 1fr; } .about-gallery .gallery-item:first-child{ grid-column: 1 / -1; } }
+  @media (max-width:520px){ .about-gallery{ grid-template-columns:1fr; } .about-gallery .gallery-item:first-child{ grid-column:auto; } }
+  .gallery-item{
+    position:relative; border-radius:18px; overflow:hidden; height:230px;
+    box-shadow: 0 14px 28px rgba(15,23,32,.10);
+  }
+  .gallery-item img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition: transform .5s cubic-bezier(.2,.8,.3,1);
+  }
+  .gallery-item:hover img{ transform: scale(1.06); }
+  .gallery-item::after{
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(0deg, rgba(10,14,18,.68) 0%, rgba(10,14,18,0) 55%);
+  }
+  .gallery-cap{
+    position:absolute; left:16px; bottom:14px; z-index:2; color:#f4efe8;
+    font-size:.85rem; font-weight:700;
+  }
+  .gallery-note{
+    margin-top:16px; font-size:.76rem; color: var(--muted); font-style:italic;
+  }
+
   .about-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items:start; }
   @media (max-width: 900px){ .about-grid{ grid-template-columns:1fr; } }
   .about-text p{ color: var(--muted); font-size: 1rem; line-height:1.8; margin: 0 0 16px; }
@@ -298,22 +360,28 @@
      WHY US
      ============================================================ */
   .why{
-    background: linear-gradient(180deg, #10161d 0%, #0b1116 100%);
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(9,13,17,.92) 0%, rgba(9,13,17,.96) 100%),
+      url('https://images.unsplash.com/photo-1745956983820-6e960f7e8472?auto=format&fit=crop&w=1800&q=70') center 30%/cover no-repeat;
+    background-attachment: fixed;
     color:#f4efe8;
   }
-  .why .section-head{ max-width:640px; }
+  @media (max-width: 900px){ .why{ background-attachment: scroll; } }
+  .why .section-head{ max-width:640px; position:relative; z-index:1; }
   .why .eyebrow{ color: var(--gold); }
   .why .eyebrow::before{ background: var(--gold); }
   .why .section-sub{ color: rgba(255,255,255,.6); }
-  .why-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .why-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; position:relative; z-index:1; }
   @media (max-width: 900px){ .why-grid{ grid-template-columns: 1fr; } }
   .why-card{
-    border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.1); background: rgba(12,17,22,.72);
+    backdrop-filter: blur(6px);
     border-radius:18px; padding: 24px 22px;
   }
   .why-card .num{ font-family:'Barlow Condensed',sans-serif; font-size:2.1rem; font-weight:800; color: var(--orange); line-height:1; }
   .why-card h3{ font-size:1.15rem; margin-top:12px; }
-  .why-card p{ margin:8px 0 0; color: rgba(255,255,255,.6); font-size:.88rem; line-height:1.6; }
+  .why-card p{ margin:8px 0 0; color: rgba(255,255,255,.65); font-size:.88rem; line-height:1.6; }
 
   /* ============================================================
      FAQ
@@ -567,6 +635,14 @@
 
   <!-- ============ ABOUT ============ -->
   <section class="about section" id="gioi-thieu">
+    <div class="about-banner reveal">
+      <img src="https://images.unsplash.com/photo-1745956983820-6e960f7e8472?auto=format&fit=crop&w=1800&q=75" alt="Xe tải vận chuyển hàng hoá trên đường cao tốc lúc hoàng hôn (ảnh minh hoạ)" loading="lazy">
+      <div class="about-banner-content">
+        <h3>Đồng hành cùng từng chuyến hàng trên mọi tuyến đường.</h3>
+        <div class="about-banner-badge"><b>2011</b>Năm bắt đầu hoạt động</div>
+      </div>
+    </div>
+
     <div class="about-grid">
       <div class="reveal">
         <div class="eyebrow">Giới thiệu</div>
@@ -598,6 +674,22 @@
         </ul>
       </div>
     </div>
+
+    <div class="about-gallery reveal">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1783428673235-77dafc15eb59?auto=format&fit=crop&w=1000&q=75" alt="Xe tải đậu dưới bầu trời xanh (ảnh minh hoạ)" loading="lazy">
+        <span class="gallery-cap">Vận tải đường bộ</span>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1700716465891-9e5e9f501d7d?auto=format&fit=crop&w=800&q=75" alt="Xe tải tại bãi container (ảnh minh hoạ)" loading="lazy">
+        <span class="gallery-cap">Kho bãi & container</span>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1682033239487-30f076c82232?auto=format&fit=crop&w=800&q=75" alt="Dãy xe tải đậu cạnh nhau (ảnh minh hoạ)" loading="lazy">
+        <span class="gallery-cap">Đội xe vận tải</span>
+      </div>
+    </div>
+    <p class="gallery-note">* Ảnh minh hoạ ngành vận tải đường bộ (nguồn: Unsplash), chưa phải hình ảnh thực tế đội xe/kho bãi của Vạn Kim Long.</p>
   </section>
 
   <!-- ============ WHY US ============ -->
@@ -708,7 +800,7 @@
   <button id="replaySplash">↻ Xem lại splash</button>
 
   <script>
-    const SPLASH_HOLD_MS = 4700;
+    const SPLASH_HOLD_MS = 5300;
     function playSplash(){
       const splash = document.getElementById('splash');
       const stage = splash.querySelector('.splash-stage');
